@@ -114,7 +114,4 @@ class Note {
   public void PlusMiss(){
     this.miss++;
   }
-  public void PlusSafe(){
-    this.safe++;
-  }
 }
