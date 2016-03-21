@@ -1,5 +1,5 @@
-//Hage
 PImage img, img2, img3, img4, apple1, apple2, apple3, apple4, finger, img5, img6, img7;
+
 import themidibus.*; //Import the library
 import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html
 import javax.sound.midi.SysexMessage;
@@ -31,6 +31,7 @@ float ScoreTop=90.0;
 int sum_miss=0;
 boolean missCounter=false;
 int sum_safe=0;
+PImage []app=new PImage[16];
 void setup() {
   fullScreen(P2D);// 画面サイズ（適宜調整）
   // size(2500, 1500);
@@ -51,6 +52,10 @@ void setup() {
   apple3=loadImage("blueApple.png");
   apple4=loadImage("blackApple.png");
   finger=loadImage("how_finger.png");
+  
+  for(int i=0;i<16;i++){
+    app[i]=loadImage("apple"+i+".jpg");
+  }
   note[note_y][0]=new Note(919, 175, 69, -200, -200);
   note[note_y][1]=new Note(1044, 169, 71, 528, 487);
   note[note_y][2]=new Note(1172, 165, 73, 531, 569);
@@ -186,7 +191,8 @@ void draw() {
   image(apple2, 168, 235, 30, 30);
   image(apple3, 194, 235, 30, 30);
   image(apple4, 220, 235, 30, 30);
-
+fill(0);
+rect(0,625,348,800);
   for (int z=0; z<=4; z++) {
     for (int s=0; s<4; s++) {
       special_width=0;
@@ -216,8 +222,14 @@ void draw() {
       }
     }
   }
-  println("Sm:"+sum_miss);
-  println("sum_safe:"+sum_safe);
+//  println("Sm:"+sum_miss);
+ println("sum_safe:"+sum_safe);
+ for(int i=0;i<app.length;i++){
+   if(sum_safe/2==i){
+     image(app[i],0,625,600/2,849/2);
+   }
+ 
+ }
   fill(255);
   text(note_x+", "+note_y,0,height);
 }
@@ -249,14 +261,14 @@ void moving_score() {
     } else if ((note_x==0)&&(note_y==3)) {
       special_moving=150.0;
     }
-    println("ScoreTop:"+ScoreTop);
-    println("moving:"+moving);
+   // println("ScoreTop:"+ScoreTop);
+   // println("moving:"+moving);
     ScoreTop=ScoreTop-moving;
     image(img5, ScoreTop-special_moving, 50, 1141, 148);//移動する楽譜の第1連
     image(img5, ScoreTop+1141-special_moving, 50, 1141, 148);//移動する楽譜の第2連
     image(img5, ScoreTop+1141*2-special_moving, 50, 1141, 148);//移動する楽譜の第3連
     image(img5, ScoreTop+1141*3-special_moving, 50, 1141, 148);//移動する楽譜の第4連
-    println("special_movinf:"+note_y+"A"+special_moving);
+  //  println("special_movinf:"+note_y+"A"+special_moving);
   }
 }
 
@@ -269,19 +281,19 @@ void rawMidi(byte[] data) { // You can also use rawMidi(byte[] data, String bus_
   print("Status Byte/MIDI Command:"+(int)(data[0] & 0xFF));
   if (((int)(data[0] & 0xFF) >= 224)&&((int)(data[0] & 0xFF) <= 227)) {
     pitchbend = (int)(data[2] & 0xFF) * 128 + (int)(data[1] & 0xFF);
-    print(": " + pitchbend);
+//    print(": " + pitchbend);
   } 
   for (int i = 1; i < data.length; i++) {
-    print(": "+(i+1)+": "+(int)(data[i] & 0xFF));
+//    print(": "+(i+1)+": "+(int)(data[i] & 0xFF));
   }
   for (int i = 1; i < data.length; i++) {
-    print(": "+(i+1)+": "+(int)(data[i] & 0xFF));
+//    print(": "+(i+1)+": "+(int)(data[i] & 0xFF));
   }
   if (((int)(data[0] & 0xFF) >= 144)&&((int)(data[0] & 0xFF) <= 171)) {
     notebus_different=((data[1] & 0xFF)-note[note_y][note_x].NoteNumber())*333+pitchbend-8192;
     note[note_y][note_x].addNote(notebus_different);
-    println("CCCC"+notebus_different);
-    println("AAAA"+note[0][0].getNote(note[0][0].played_note.size()-1));
+ //   println("CCCC"+notebus_different);
+ //   println("AAAA"+note[0][0].getNote(note[0][0].played_note.size()-1));
   }
   if (((int)(data[0] & 0xFF) >= 128)&&((int)(data[0] & 0xFF) <= 131)) {
     println();
