@@ -6,16 +6,15 @@ class Note {
   private int note_number;
   private int point_x;
   private int point_y;
-  private int miss;
+  private int miss=0;
   private ArrayList<Integer> played_note=new ArrayList();
 
-  Note(int x, int y, int note_number, int point_x, int point_y, int miss) {
+  Note(int x, int y, int note_number, int point_x, int point_y) {
     this.x=x;
     this.y=y;
     this.note_number=note_number;
     this.point_x=point_x;
     this.point_y=point_y;
-    this.miss=miss;
   }
   public int getX() {
     return this.x;
@@ -107,5 +106,8 @@ class Note {
   }
   public int getNote(int m) {
     return this.played_note.get(m);
+  }
+  public void PlusMiss(){
+    this.miss++;
   }
 }

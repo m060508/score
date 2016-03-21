@@ -49,14 +49,14 @@ void setup() {
   apple3=loadImage("blueApple.png");
   apple4=loadImage("blackApple.png");
   finger=loadImage("how_finger.png");
-  note[note_y][0]=new Note(919, 175, 69, -200, -200, 0);
-  note[note_y][1]=new Note(1044, 169, 71, 528, 487, 0);
-  note[note_y][2]=new Note(1172, 165, 73, 531, 569, 0);
-  note[note_y][3]=new Note(1299, 158, 74, 536, 609, 0);
-  note[note_y][4]=new Note(1443, 154, 76, -200, -200, 0);
-  note[note_y][5]=new Note(1577, 146, 78, 551, 483, 0);
-  note[note_y][6]=new Note(1712, 142, 79, 551, 532, 0);
-  note[note_y][7]=new Note(1846, 136, 81, 556, 606, 0);
+  note[note_y][0]=new Note(919, 175, 69, -200, -200);
+  note[note_y][1]=new Note(1044, 169, 71, 528, 487);
+  note[note_y][2]=new Note(1172, 165, 73, 531, 569);
+  note[note_y][3]=new Note(1299, 158, 74, 536, 609);
+  note[note_y][4]=new Note(1443, 154, 76, -200, -200);
+  note[note_y][5]=new Note(1577, 146, 78, 551, 483);
+  note[note_y][6]=new Note(1712, 142, 79, 551, 532);
+  note[note_y][7]=new Note(1846, 136, 81, 556, 606);
 
   c[0]=new ColorRect(0, 0, 255);
   c[1]=new ColorRect(38, 92, 170);
@@ -84,7 +84,7 @@ void setup() {
 
   for (int j=1; j<4; j++) {
     for (int k=0; k<8; k++) {
-      note[note_y+j][k]=new Note(note[note_y][k].getX(), note[note_y][k].getY()+212*j, note[note_y][k].NoteNumber(), note[note_y][k].Point_X(), note[note_y][k].Point_Y(), note[note_y][k].Miss());
+      note[note_y+j][k]=new Note(note[note_y][k].getX(), note[note_y][k].getY()+212*j, note[note_y][k].NoteNumber(), note[note_y][k].Point_X(), note[note_y][k].Point_Y());
     }
   }
 }
@@ -198,8 +198,16 @@ void draw() {
     }
   }
   note[note_y][note_x].point_mark();
-  if (note[note_y][note_x].miss==1) {
+  sum = 0;
+  for(int i=0;i<note.length;i++){
+    for(int j=0;j<note[i].length;j++){
+  //if (note[note_y][note_x].miss==1) {
+  //  sum+=note[i][j].Miss();
+  if(note[i][j].Miss()>=1){
     sum++;
+  }
+  //}
+    }
   }
   println("Sm:"+sum);
 }
@@ -269,8 +277,9 @@ void rawMidi(byte[] data) { // You can also use rawMidi(byte[] data, String bus_
     println();
 
     if ((int)(data[1] & 0xFF)!=note[note_y][note_x].NoteNumber() ) {
-      note[note_y][note_x].miss+=1;
+      note[note_y][note_x].PlusMiss();
     }
+   
     if ((int)(data[1] & 0xFF)==note[note_y][note_x].NoteNumber()) {
       note_x++;
       ismoving=true;
