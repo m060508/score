@@ -28,8 +28,9 @@ int special_width;
 boolean ismoving=false;
 float moving;
 float ScoreTop=90.0;
-int sum=0;
+int sum_miss=0;
 boolean missCounter=false;
+
 void setup() {
   fullScreen(P2D);// 画面サイズ（適宜調整）
   // size(2500, 1500);
@@ -199,18 +200,19 @@ void draw() {
     }
   }
   note[note_y][note_x].point_mark();
-  sum = 0;
+  sum_miss=0;
   for(int i=0;i<note.length;i++){
     for(int j=0;j<note[i].length;j++){
   //if (note[note_y][note_x].miss==1) {
   //  sum+=note[i][j].Miss();
-  if(note[i][j].Miss()>=1){
-    sum++;
+  if(note[i][j].Miss()<=1){
+    sum_miss++;
   }
   //}
     }
   }
-  println("Sm:"+sum);
+  println("Sm:"+sum_miss);
+  
 }
 
 
@@ -279,11 +281,13 @@ void rawMidi(byte[] data) { // You can also use rawMidi(byte[] data, String bus_
 
     if ((int)(data[1] & 0xFF)!=note[note_y][note_x].NoteNumber() ) {
       note[note_y][note_x].PlusMiss();
+     
     }
    
     if ((int)(data[1] & 0xFF)==note[note_y][note_x].NoteNumber()) {
       note_x++;
       ismoving=true;
+     // note[note_y][note_x].PlusSafe();
       if (note_x!=0&&note_x==8) {
         note_y++;
         note_x=0;

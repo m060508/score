@@ -7,6 +7,7 @@ class Note {
   private int point_x;
   private int point_y;
   private int miss=0;
+  private int safe=0;
   private ArrayList<Integer> played_note=new ArrayList();
 
   Note(int x, int y, int note_number, int point_x, int point_y) {
@@ -33,6 +34,9 @@ class Note {
   }
   public int Miss() {
     return this.miss;
+  }
+  public int Safe(){
+    return this.safe;
   }
 
   void bluerect() {
@@ -109,5 +113,8 @@ class Note {
   }
   public void PlusMiss(){
     this.miss++;
+  }
+  public void PlusSafe(){
+    this.safe++;
   }
 }
