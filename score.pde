@@ -1,3 +1,4 @@
+//Hage
 PImage img, img2, img3, img4, apple1, apple2, apple3, apple4, finger, img5, img6, img7;
 import themidibus.*; //Import the library
 import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html
