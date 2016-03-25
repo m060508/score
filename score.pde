@@ -7,7 +7,7 @@ import javax.sound.midi.ShortMessage;
 import processing.video.*;  //ビデオライブラリをインポート
 import processing.opengl.*;
 Capture video;  //Capture型の変数videoを宣言
-MidiBus myBus; // The MidiBus
+MidiBus myBus; //The MidiBus
 int pitchbend=0;
 int notebus_different=0;
 Note[][]note=new Note[4][8];      
@@ -226,7 +226,7 @@ rect(0,625,348,800);
  println("sum_safe:"+sum_safe);
  for(int i=0;i<app.length;i++){
    if(sum_safe/2==i){
-     image(app[i],0,625,600/2,849/2);
+     image(app[i],0,560,600/2,849/2);
    }
  
  }
